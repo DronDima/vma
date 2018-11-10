@@ -19,6 +19,7 @@ def ThomasMethod(A, d):
     x[0] = beta[0] = (d[0] - c[0]*beta[1])/(b[0] + c[0]*alpha[1])
     for i in range(1, n):
         x[i] = alpha[i]*x[i-1] + beta[i]
+    print("Alpha: ", alpha)
     return x
 b = np.copy(b)
 A = np.copy(A)
