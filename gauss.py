@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+
 n = 5
 np.set_printoptions(precision = 4)
 eps = 0.00001
@@ -71,6 +72,8 @@ print(discrepancy(np.copy(A), data['x'], b))
 print("Определитель: ", data['det'])
 print("Обратная матрица: ")
 print(inverse)
+print(np.linalg.norm(discrepancyM(np.copy(A), inverse), 1))
+print(np.linalg.norm(discrepancy(np.copy(A), data['x'], b), 1))
 print("Невязка обратной матрицы: ")
 print(discrepancyM(np.copy(A), inverse))
 print("Число обусловленности: ")

@@ -8,23 +8,29 @@ stack = []
 A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = 5)
 b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = 5, nrows = 1)
 
-def jacobi(A, b):
-    B = np.zeros((n,n))
+
+def seidel(A, b):
+    E = np.identity(n)
+    B = np.zeros((n, n))
     g = np.zeros(n)
     x = np.zeros(n)
     for i in range(n):
         B[i,:] = -A[i,:]/A[i,i]
         B[i,i] = 0
         g[i] = b[i]/A[i,i]
-    X = np.dot(B,x) + g
-    while(np.linalg.norm(X-x, np.inf) > eps):
+    H = np.tril(B)
+    F = np.triu(B)
+    X = np.dot(np.dot(np.linalg.inv(E-H), F), x) + np.dot(np.linalg.inv(E-H), g) # (E-H)^-1*F*x + (E-H)^-1 * g
+    while (np.linalg.norm(X - x, np.inf) > eps):
         x = X
-        X = np.dot(B,x) + g
-    print("Невязка: ", np.dot(A, X) - b)
-    return(x)
+        X = np.dot(np.dot(np.linalg.inv(E - H), F), x) + np.dot(np.linalg.inv(E - H), g)
+    return (x)
+
+
+
 
 
 
 print("Расширенная матрица:")
 print(np.insert(np.copy(A), n, b, axis=1))
-print("Решение: ", jacobi(np.copy(A), np.copy(b).ravel()))
+print("Решение: ", seidel(np.copy(A), np.copy(b).ravel()));
