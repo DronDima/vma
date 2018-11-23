@@ -20,14 +20,16 @@ def relax(A, b):
     w = 0.9
     x = np.zeros(n)
     X = np.zeros(n)
+    iterations = 0
     for i in range(n):
         X[i] = (1 - w) * x[i] - w * sum(A, 0, i, X, i) - w * sum(A, i + 1, n, x, i) + w * b[i] / A[i, i]
     while(np.linalg.norm(X - x, np.inf) > eps):
+        iterations += 1
         x = np.copy(X)
         for i in range(n):
             X[i] = (1 - w) * x[i] - w * sum(A, 0, i, X, i) - w * sum(A, i + 1, n, x, i) + w * b[i] / A[i, i]
-    print(X)
+    print("Количество итераций: ", iterations)
+    print("Невязка: ", np.dot(A, X) - b)
+    print("Решение: ", X)
 
-print("Расширенная матрица:")
-print(np.insert(np.copy(A), n, b, axis=1))
 relax(np.copy(A), np.copy(b).ravel())

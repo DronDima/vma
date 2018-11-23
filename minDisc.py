@@ -18,11 +18,13 @@ def iteration(A, b, x):
 def minDisc(A, b):
     x = np.zeros(n)
     X = iteration(A, b, x)
+    iterations = 0
     while (np.linalg.norm(X - x, np.inf) > eps):
+        iterations += 1
         x = X
         X = iteration(A, b, x)
-    print(X)
+    print("Количество итераций: ", iterations)
+    print("Невязка: ", np.dot(A, X) - b)
+    print("Решение: ", X)
 
-print("Расширенная матрица:")
-print(np.insert(np.copy(A), n, b, axis=1))
 minDisc(np.copy(A), np.copy(b).ravel())
