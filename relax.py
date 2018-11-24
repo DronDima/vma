@@ -10,9 +10,7 @@ b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = 5, nrows = 1)
 
 def sum(A, fromVar, toVar, x, i):
     result = 0
-    print("i = ", i)
     for j in range(fromVar, toVar):
-        print(j)
         result += A[i,j] * x[j] / A[i, i]
     return result
 
@@ -32,4 +30,7 @@ def relax(A, b):
     print("Невязка: ", np.dot(A, X) - b)
     print("Решение: ", X)
 
+b = np.copy(b)
+b = np.dot(A.transpose(), b.reshape(5,1))
+A = np.dot(A.transpose(), A)
 relax(np.copy(A), np.copy(b).ravel())

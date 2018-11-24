@@ -16,6 +16,7 @@ def iteration(A, b, x):
     return (X)
 
 def minDisc(A, b):
+    print(A)
     x = np.zeros(n)
     X = iteration(A, b, x)
     iterations = 0
@@ -27,4 +28,7 @@ def minDisc(A, b):
     print("Невязка: ", np.dot(A, X) - b)
     print("Решение: ", X)
 
+b = np.copy(b)
+b = np.dot(A.transpose(), b.reshape(5,1))
+A = np.dot(A.transpose(), A)
 minDisc(np.copy(A), np.copy(b).ravel())
