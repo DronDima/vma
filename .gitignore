@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 #Igor's labs.
-VMAlab.*py
+VMAlab*\.py
 
 # C extensions
 *.so
