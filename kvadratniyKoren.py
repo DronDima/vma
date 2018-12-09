@@ -2,9 +2,8 @@ import numpy as np
 import pandas as pd
 n = 5
 np.set_printoptions(precision = 4)
-eps = 0.00001
-A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = 5)
-b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = 5, nrows = 1)
+A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = n)
+b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = n, nrows = 1)
 
 def CholeskyMethod(A, b):
     result = {'x': np.zeros(n), 'det': 1}
@@ -33,6 +32,8 @@ b = np.dot(A.transpose(), b.reshape(5,1))
 A = np.dot(A.transpose(), A)
 print("Расширенная матрица:")
 print(np.insert(A, n, b.ravel(), axis=1))
+L = np.linalg.cholesky(A)
+print(L)
 data = CholeskyMethod(A, b)
 print("Вектор решений: ", data['x'])
 print("Невязка: ", np.dot(A, data['x']) - b.ravel())

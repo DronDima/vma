@@ -6,8 +6,8 @@ n = 5
 np.set_printoptions(precision = 4)
 eps = 0.00001
 stack = []
-A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = 5)
-b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = 5, nrows = 1)
+A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = n)
+b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = n, nrows = 1)
 
 def jacobi(A, b):
     B = np.zeros((n,n))
@@ -28,6 +28,6 @@ def jacobi(A, b):
     print("Количество итераций: ", iterations)
     print("Решение: ", X)
     print("Невязка: ", np.dot(A, X) - b)
-    print(((np.log10(eps) + np.log10(1 - alg.norm(B, np.inf)) - np.log10(alg.norm(g, np.inf)))/np.log10(alg.norm(B, np.inf)))-1)
+    print("Априорная оценка: ", ((np.log10(eps) + np.log10(1 - alg.norm(B, )) - np.log10(alg.norm(g, np.inf)))/np.log10(alg.norm(B, np.inf)))-1)
 
 jacobi(np.copy(A), np.copy(b).ravel())

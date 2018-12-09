@@ -1,17 +1,16 @@
 import numpy as np
 import pandas as pd
 
-
 n = 5
 np.set_printoptions(precision = 4)
 eps = 0.00001
 stack = []
-A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = 5)
-b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = 5, nrows = 1)
+A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = n)
+b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = n, nrows = 1)
 
 def gaussMethod(copy, dCopy):
-    result = {'x': np.zeros(n), 'det': 1, 'columns': np.eye(5)}
-    invColumns = np.eye(5)
+    result = {'x': np.zeros(n), 'det': 1, 'columns': np.eye(n)}
+    invColumns = np.eye(n)
     for k in range(n):
         maxElem = abs(copy).max(axis = 1)
         maxElemIndex = abs(copy).argmax(axis = 1)
@@ -47,7 +46,7 @@ def discrepancy(matrix, x, b):
     return np.dot(matrix, x) - b
 
 def discrepancyM(matrix, inverse):
-    return np.dot(matrix, inverse) - np.eye(5)
+    return np.dot(matrix, inverse) - np.eye(n)
 
 def condition(matrix, inverse):
     return np.linalg.norm(matrix, 'fro') * np.linalg.norm(inverse, 'fro')

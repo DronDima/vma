@@ -5,8 +5,8 @@ n = 5
 np.set_printoptions(precision = 4)
 eps = 0.00001
 stack = []
-A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = 5)
-b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = 5, nrows = 1)
+A = pd.read_csv('matrix.txt', sep=' ', header = None, nrows = n)
+b = pd.read_csv('matrix.txt', sep=' ', header = None, skiprows = n, nrows = 1)
 
 def sum(A, fromVar, toVar, x, i):
     result = 0
@@ -33,4 +33,6 @@ def relax(A, b):
 b = np.copy(b)
 b = np.dot(A.transpose(), b.reshape(5,1))
 A = np.dot(A.transpose(), A)
+print(A)
+print(b)
 relax(np.copy(A), np.copy(b).ravel())
