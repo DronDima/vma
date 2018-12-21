@@ -22,19 +22,30 @@ def danilevskogo(A):
         B[i-2,i-2] = 1/A[i-1,i-2]
         matrix = np.dot(matrix, B)
         A = np.dot(np.dot(np.linalg.inv(B), A), B)
+    print("Форма Фробениса:")
+    print(A)
     P = np.hstack((np.array([1]), -A[0]))
     x = sy.Symbol("x")
-    eigvals = solve(x**5 + P[1]*x**4 + P[2]*x**3 + P[3]*x**2 + P[4]*x + P[5])
+    eigvals = np.array(solve(x**5 + P[1]*x**4 + P[2]*x**3 + P[3]*x**2 + P[4]*x + P[5]))
+    print("Y vectors: ")
     for i in range(n):
         y = np.array([eigvals[i]**4, eigvals[i]**3,
                       eigvals[i]**2, eigvals[i], 1])
+        print(y.astype(np.double, 4))
         x = np.dot(matrix, y)
         x /= lenth(x)
         eigvect[:,i] = x
-        print(x)
-    print(eigvals)
+    return eigvals, eigvect
 
 
-
-print(np.linalg.eig(np.dot(np.copy(A).transpose(), np.copy(A))))
-danilevskogo(np.dot(np.copy(A).transpose(), np.copy(A)))
+#print(np.linalg.eig(np.dot(np.copy(A).transpose(), np.copy(A))))
+A = np.dot(np.copy(A).transpose(), np.copy(A))
+print(np.linalg.eig(A))
+eigvals, eigvect = danilevskogo(A)
+print("Собственные значения: ", eigvals.astype(np.double, 4))
+print("Собственные векторы:")
+print(eigvect)
+print("Невязка:")
+for i in range(n):
+    disc = np.dot(A, eigvect[:, i]) - np.dot(eigvals[i], eigvect[:, i])
+    print(disc.astype(np.double, 4))
